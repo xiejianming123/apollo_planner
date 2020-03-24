@@ -51,7 +51,7 @@ bool PncMap::UpdateRoutingResponse(const routing::RoutingResponse &routing) {
 
 从上述代码可以响应结果剥离工作比较简单，就是对这条完整路径进行RoadSegment，Passage，LaneSegment的存储，依旧使用第一小节中的图:
 
-![img](https://github.com/YannZyl/Apollo-Note/blob/master/images/planning/routing_result.png)
+![img](https://github.com/xiejianming123/apollo_planner/blob/master/img/routing_result.png)
 
 最后得到的结果：
 
@@ -180,7 +180,7 @@ bool PncMap::GetRouteSegments(const VehicleState &vehicle_state,
 }
 ```
 
-![img](https://github.com/YannZyl/Apollo-Note/blob/master/images/planning/routing_segments.png)
+![img](https://github.com/xiejianming123/apollo_planner/blob/master/img/routing_segments.png)
 
 这部分由`UpdateVehicleState`函数完成，这个函数完成的工作就是计算上图中的红色部分：包括当前车辆在对应车道上的投影`adc_waypoint_`，车辆投影点所在LaneSegment在`route_indices_`中的索引`adc_route_index_`，下一个最近查询点在`routing_waypoint_index_`中的索引`next_routing_waypoint_index_`。
 
@@ -721,7 +721,7 @@ RouteSegments中的每个段包含的属性有：
 
 RouteSegments路径点生成的主要目的，是查询HD Map，根据其车道Lane段内的采样点point，将这个大而宏观的的RouteSegment划分成小的离散的轨迹点MapPathPoint，然后这些点两两组合成一个小的LineSegment2d，顺便计算这个段的方向heading(结束点坐标-起始点坐标)，这样就可以将行驶区域与Lane一样，利用更小的"LineSegment2d"来保存。
 
-![img](https://github.com/YannZyl/Apollo-Note/blob/master/images/planning/generate_path_1.png)
+![img](https://github.com/xiejianming123/apollo_planner/blob/master/img/generate_path_1.png)
 
 如上图所示例子，图中给出了一个行驶方案。为了方便讲解，此处没有考虑到ExtendSegments，总共包含4个RoadSegments，每个RoadSegments由N个Passage(这里取一个做示例，所以是一个RouteSegments)，每个Passage包含3个LaneSegment。
 
@@ -785,7 +785,7 @@ void PncMap::AppendLaneToPoints(LaneInfoConstPtr lane, const double start_s,
 
 在上步骤"A. RouteSegments离散化MapPathPoint"中，已经将原始粗糙的RouteSegments离散化为一个个MapPathPoint，这一步就将这些MapPathPoint两两重组成一个个新LaneSegment2d.
 
-![img](https://github.com/YannZyl/Apollo-Note/blob/master/images/planning/generate_path_3.png)
+![img](https://github.com/xiejianming123/apollo_planner/blob/master/img/generate_path_3.png)
 
 重组过程如上图，这部分由Path::InitPoints和Path::InitLaneSegments函数完成。
 
@@ -873,7 +873,7 @@ void LaneSegment::Join(std::vector<LaneSegment>* segments) {
 
 ### C. 道路采样点生成
 
-![img](https://github.com/YannZyl/Apollo-Note/blob/master/images/planning/generate_path_4.png)
+![img](https://github.com/xiejianming123/apollo_planner/blob/master/img/generate_path_4.png)
 
 跟HD Map中Lane的构建一样，segments_已经保存了这个RouteSegments的各个段，接下来的工作就是等距离采样(累积距离)，离散化保存这条路径，等间隔采样的频率是每`kSampleDistance`采样一个点，默认0.25m。
 
